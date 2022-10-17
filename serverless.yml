@@ -4,6 +4,8 @@ provider:
   name: aws
   runtime: nodejs14.x
   stage: production
+  deploymentBucket:
+    name: serverless-lambda-s3-deployment-bucket-${opt:stage, self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -12,6 +14,7 @@ provider:
 
 plugins:
   - serverless-webpack
+  - serverless-deployment-bucket
 
 custom:
   webpack:
