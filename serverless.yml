@@ -2,7 +2,7 @@ service: serverless-lambda-s3
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs14.x
   stage: production
   iamRoleStatements:
     - Effect: Allow
