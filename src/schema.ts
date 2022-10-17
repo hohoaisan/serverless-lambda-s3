@@ -3,7 +3,7 @@ const defaultConfig = {
   padding_symbol: ' '
 }
 
-module.exports = [
+export default [
   {
     name: 'First',
     width: 20,

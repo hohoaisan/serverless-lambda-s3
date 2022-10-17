@@ -1,14 +1,11 @@
-'use strict'
-
-const util = require('util')
-const AWS = require('aws-sdk')
+import AWS from 'aws-sdk'
 const Fixy = require('fixy')
 const Papa = require('papaparse')
-const fixySchema = require('./schema.js')
+import fixySchema  from './schema'
 
 const s3 = new AWS.S3()
 
-module.exports.processCSV = async (event, context) => {
+export const processCSV = async (event, _context) => {
   const csvBucket = event.Records[0].s3.bucket.name
   const csvKey = event.Records[0].s3.object.key
   const fixedWidthBucket = process.env.FIXED_WIDTH_BUCKET

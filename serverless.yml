@@ -8,12 +8,20 @@ provider:
     - Effect: Allow
       Action:
         - s3:*
-      Resource: "*"
+      Resource: '*'
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: webpack.config.js
+    includeModules: true
 
 functions:
   processCSV:
     name: processCSV
-    handler: handler.processCSV
+    handler: src/handler.processCSV
     events:
       - s3:
           bucket: CSV-BUCKET-NAME-CHANGE-ME
