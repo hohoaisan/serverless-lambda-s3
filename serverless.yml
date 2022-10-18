@@ -20,24 +20,24 @@ custom:
   webpack:
     webpackConfig: webpack.config.js
     includeModules: true
-
+    packagerOptions:
+      scripts:
+        # sharp module needs to rebuild for lambda
+        - npm rebuild --arch=x64 --platform=linux --target=14.20.1 sharp
 functions:
-  processCSV:
-    name: processCSV
-    handler: src/handler.processCSV
+  s3NewObjectResizeHandler:
+    name: s3NewObjectResizeHandler
+    handler: ./src/imageResize.handler
     events:
       - s3:
-          bucket: CSV-BUCKET-NAME-CHANGE-ME
+          bucket: SOURCE-BUCKET-NAME-CHANGE-ME
           event: s3:ObjectCreated:*
-          rules:
-            - suffix: .csv
     environment:
-      FIXED_WIDTH_BUCKET: ${self:resources.Resources.fixedwidth.Properties.BucketName}
-      NODE_ENV: production
+      TARGET_BUCKET: ${self:resources.Resources.resizedS3.Properties.BucketName}
 
 resources:
   Resources:
-    fixedwidth:
+    resizedS3:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: FIXED-WIDTH-BUCKET-NAME-CHANGE-ME
+        BucketName: RESIZE-BUCKET-NAME-CHANGE-ME
