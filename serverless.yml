@@ -30,14 +30,9 @@ functions:
     handler: ./src/imageResize.handler
     events:
       - s3:
-          bucket: SOURCE-BUCKET-NAME-CHANGE-ME
+          bucket: s3-image-resizer-bucket-source
           event: s3:ObjectCreated:*
+          existing: true
+          forceDeploy: true
     environment:
-      TARGET_BUCKET: ${self:resources.Resources.resizedS3.Properties.BucketName}
-
-resources:
-  Resources:
-    resizedS3:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: RESIZE-BUCKET-NAME-CHANGE-ME
+      TARGET_BUCKET: s3-image-resizer-bucket-target
