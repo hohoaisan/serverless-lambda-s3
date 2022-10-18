@@ -2,24 +2,7 @@
 
 This project demonstrates how the [Serverless Framework](https://serverless.com/) can be used to deploy a NodeJS Lambda function that responds to events in an S3 bucket.
 
-In our demonstration, the Lambda function responds to `.csv` files uploaded to an S3 bucket, transforms the data to a fixed width format, and writes the data to a `.txt` file in an output bucket.
-
-##### sampleInputData.csv
-
-```
-First,Last,Email,Phone
-John,Munson,john.munson@gmail.com,343-231-3893
-Ed,Karisch,edward.karisch@gmail.com,680-236-1187
-Josh,Stevens,josh.stevens@gmail.com,851-990-4343
-```
-
-##### sampleOutputData.txt
-
-```
-John                Munson              john.munson@gmail.com                             343-231-3893
-Ed                  Karisch             edward.karisch@gmail.com                          680-236-1187
-Josh                Stevens             josh.stevens@gmail.com                            851-990-4343
-```
+In our demonstration, the Lambda function responds to image files uploaded to an S3 bucket, resize them, and writes the data to a corresponding image file in an output bucket.
 
 ### Getting Started
 
@@ -31,7 +14,7 @@ Next, go ahead and clone the project and install package dependencies.
 - `cd serverless-lambda-s3`
 - `yarn` or `npm install`
 
-Because the `serverless.yml` file is configured to provision any AWS resources that the Lambda function is dependent on, and because S3 bucket names must be globally unique, you will need to change `CSV-BUCKET-NAME-CHANGE-ME` and `FIXED-WIDTH-BUCKET-NAME-CHANGE-ME` in `serverless.yml` to something that is meaningful but still unique.
+Because the `serverless.yml` file is configured to provision any AWS resources that the Lambda function is dependent on, and because S3 bucket names must be globally unique, you will need to change `SOURCE-BUCKET-NAME-CHANGE-ME` and `RESIZE-BUCKET-NAME-CHANGE-ME` in `serverless.yml` to something that is meaningful but still unique.
 
 At this point, the only thing left to do is deploy our function!
 
@@ -39,9 +22,9 @@ At this point, the only thing left to do is deploy our function!
 
 ### Testing it out
 
-If everything went according to plan, you should be able to login to the AWS S3 console and upload a `.csv` file to the input bucket. It will need to match the schema that `schema.js` is expecting. Feel free to use the `sampleData.csv` file provided with this repo.
+If everything went according to plan, you should be able to login to the AWS S3 console and upload any image file to the input bucket.
 
-The deployed Lambda function will be triggered and should generate a fixed width file that gets saved in the output bucket. Whether the function succeeded or failed, there should be some sort of output in AWS Cloudwatch.
+The deployed Lambda function will be triggered and should generate a resized image file that gets saved in the output bucket. Whether the function succeeded or failed, there should be some sort of output in AWS Cloudwatch.
 
 ### Cleaning Up
 
